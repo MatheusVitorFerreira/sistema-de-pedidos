@@ -15,7 +15,7 @@ import com.mtdev00.Sistema_Cadastro.DTO.ClientDTOComplet;
 import com.mtdev00.Sistema_Cadastro.Domain.Address;
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
 import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;
-import com.mtdev00.Sistema_Cadastro.Service.Validator.DataIntegrityException;
+import com.mtdev00.Sistema_Cadastro.Service.TreatmentErros.DataIntegrityException;
 import com.mtdev00.Sistema_Cadastro.repository.AddressRepository;
 import com.mtdev00.Sistema_Cadastro.repository.ClientRepository;
 

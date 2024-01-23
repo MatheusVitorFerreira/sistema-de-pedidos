@@ -1,4 +1,4 @@
-package com.mtdev00.Sistema_Cadastro.Service.Validator;
+package com.mtdev00.Sistema_Cadastro.Service.TreatmentErros;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;

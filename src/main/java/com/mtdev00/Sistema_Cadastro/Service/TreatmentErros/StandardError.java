@@ -1,4 +1,4 @@
-package com.mtdev00.Sistema_Cadastro.Service.Validator;
+package com.mtdev00.Sistema_Cadastro.Service.TreatmentErros;
 
 import java.io.Serializable;
 

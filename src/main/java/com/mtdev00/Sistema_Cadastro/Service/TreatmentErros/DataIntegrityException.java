@@ -1,4 +1,4 @@
-package com.mtdev00.Sistema_Cadastro.Service.Validator;
+package com.mtdev00.Sistema_Cadastro.Service.TreatmentErros;
 
 public class DataIntegrityException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
