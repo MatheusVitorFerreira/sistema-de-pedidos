@@ -1,5 +1,7 @@
 package com.mtdev00.Sistema_Cadastro.DTO;
 
+import com.mtdev00.Sistema_Cadastro.Domain.Client;
+
 public class ClientDTOComplet {
 	private Integer id;
 	private String name;
@@ -17,6 +19,9 @@ public class ClientDTOComplet {
 	
 	private String telephone1;
     private String telephone2;
+	public ClientDTOComplet(Client obj) {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getId() {
 		return id;
 	}
