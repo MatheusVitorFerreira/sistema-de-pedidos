@@ -14,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -29,7 +28,6 @@ public class Product implements Serializable {
 	@Column(name = "Price")
 	private Double price;
 	private Integer stockQuantity;
-	@Transient
 	private String category;
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.product")
@@ -50,6 +48,11 @@ public class Product implements Serializable {
 
 	public Integer getId() {
 		return id;
+	}
+	
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
