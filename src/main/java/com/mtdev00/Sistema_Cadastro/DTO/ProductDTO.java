@@ -3,7 +3,9 @@ package com.mtdev00.Sistema_Cadastro.DTO;
 import java.io.Serializable;
 
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
+import com.mtdev00.Sistema_Cadastro.Service.Validation.ProductUpdate;
 
+@ProductUpdate
 public class ProductDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;

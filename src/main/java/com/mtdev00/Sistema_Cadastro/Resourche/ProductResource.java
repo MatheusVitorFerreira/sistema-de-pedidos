@@ -24,6 +24,8 @@ import com.mtdev00.Sistema_Cadastro.DTO.ProductDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
 import com.mtdev00.Sistema_Cadastro.Service.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/product")
 public class ProductResource implements Serializable {
@@ -64,7 +66,7 @@ public class ProductResource implements Serializable {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody ProductDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ProductDTO objDto) {
 		Product obj = service.fromDTO(objDto);
 		obj.setId(null);
 		obj = service.insertProduct(obj);
@@ -73,7 +75,7 @@ public class ProductResource implements Serializable {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Product> updateProduct(@RequestBody ProductDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Product> updateProduct(@Valid @RequestBody ProductDTO objDto, @PathVariable Integer id) {
 		Product obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -85,7 +87,7 @@ public class ProductResource implements Serializable {
 		return ResponseEntity.noContent().build();
 	}
 	@PatchMapping(value =  "/{id}")
-	public ResponseEntity<Product> updatePatch(@RequestBody ProductDTO objDto, @PathVariable Integer id){
+	public ResponseEntity<Product> updatePatch(@Valid @RequestBody ProductDTO objDto, @PathVariable Integer id){
 		Product obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.updatePatch(obj);

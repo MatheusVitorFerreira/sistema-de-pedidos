@@ -32,7 +32,6 @@ public class Client implements Serializable {
 	private Integer id;
 	@NotEmpty
 	private String name;
-	@NotEmpty
 	@Column(unique = true)
 	private String email;
 

@@ -25,6 +25,8 @@ import com.mtdev00.Sistema_Cadastro.Domain.Client;
 import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;
 import com.mtdev00.Sistema_Cadastro.Service.ClientService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientResource {
@@ -67,7 +69,7 @@ public class ClientResource {
 
 	// Inserindo cLientes
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody ClientDTOComplet objDto) {
+	public ResponseEntity<Void> insert(@Valid@RequestBody ClientDTOComplet objDto) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(null);
 		obj = service.insert(obj);
@@ -76,7 +78,7 @@ public class ClientResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Client> update(@RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> update(@Valid@RequestBody ClientDTO objDto, @PathVariable Integer id) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -84,7 +86,7 @@ public class ClientResource {
 	}
 
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Client> updatePatch(@RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> updatePatch(@Valid@RequestBody ClientDTO objDto, @PathVariable Integer id) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.updatePatch(obj);

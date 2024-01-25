@@ -24,4 +24,10 @@ public class ResourceExcepetionHandller {
 		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
+	@ExceptionHandler(UpdateException.class)
+	public ResponseEntity<StandardError> UpdateException(UpdateException e , HttpServletRequest request){
+		
+		StandardError err = new StandardError(HttpStatus.CONFLICT.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
+	}
 }

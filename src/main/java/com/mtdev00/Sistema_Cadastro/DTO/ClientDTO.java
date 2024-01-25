@@ -1,7 +1,8 @@
 package com.mtdev00.Sistema_Cadastro.DTO;
 
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
-
+import com.mtdev00.Sistema_Cadastro.Service.Validation.ClientUpdate;
+@ClientUpdate
 public class ClientDTO {
 	private Integer id;
 	private String name;
