@@ -1,5 +1,8 @@
 package com.mtdev00.Sistema_Cadastro.Domain;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,6 +13,7 @@ import java.util.Set;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
@@ -25,6 +29,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Clients")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -36,16 +41,14 @@ public class Client implements Serializable {
 	private String email;
 
 	private Integer type;
-	
-	
-	@Column(unique = true,nullable = true)
+
+	@Column(unique = true, nullable = true)
 	private String cpf;
 	@CNPJ
-	
-	@Column(unique = true,nullable = true)
+	@Column(unique = true, nullable = true)
 	private String cnpj;
-	
-	@OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> address = new ArrayList<>();
 
 	@ElementCollection
@@ -55,19 +58,20 @@ public class Client implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
-public Client() {
 
-}
-	public Client(Integer id,String name,String email, TypeClient type, String cpf, String cnpj) {
+	public Client() {
+
+	}
+
+	public Client(Integer id, String name, String email, TypeClient type, String cpf, String cnpj) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.type = (type == null) ? null:type.getCod();
+		this.type = (type == null) ? null : type.getCod();
 		this.cpf = cpf;
 		this.cnpj = cnpj;
 	}
-	
 
 	public Client(Integer id, String name, String email, Integer type, String cpf, String cnpj, List<Address> address,
 			Set<String> telephone, List<Order> orders) {
@@ -82,6 +86,7 @@ public Client() {
 		this.telephone = telephone;
 		this.orders = orders;
 	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -114,7 +119,6 @@ public Client() {
 		this.type = type;
 	}
 
-
 	public Set<String> getTelephone() {
 		return telephone;
 	}
@@ -142,12 +146,15 @@ public Client() {
 	public List<Address> getAddress() {
 		return address;
 	}
+
 	public void setAddress(List<Address> address) {
 		this.address = address;
 	}
+
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -155,6 +162,16 @@ public Client() {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(address);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        address = (List<Address>) in.readObject();
+    }
 
 	@Override
 	public int hashCode() {

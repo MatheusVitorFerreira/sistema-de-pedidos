@@ -28,4 +28,12 @@ public class CardPayment extends Payment {
 		this.parcelsAmount = parcelsAmount;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("parcelsAmount:");
+		builder.append(getParcelsAmount());
+		return builder.toString();
+	}
+
 }

@@ -1,7 +1,9 @@
 package com.mtdev00.Sistema_Cadastro.Domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,16 +16,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name ="Products")
+@Table(name = "Products")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotBlank
 	private String name;
 	@Column(name = "Price")
 	private Double price;
@@ -46,10 +46,18 @@ public class Product implements Serializable {
 		this.category = category;
 	}
 
+	@JsonIgnore
+	public List<Order> getOrders() {
+		List<Order> list = new ArrayList<>();
+		for (OrderItems x : items) {
+			list.add(x.getOrder());
+		}
+		return list;
+	}
+
 	public Integer getId() {
 		return id;
 	}
-	
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -111,5 +119,4 @@ public class Product implements Serializable {
 		Product other = (Product) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mtdev00.Sistema_Cadastro.DTO.ClientDTO;
 import com.mtdev00.Sistema_Cadastro.DTO.ClientDTOComplet;
+import com.mtdev00.Sistema_Cadastro.Domain.Address;
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
 import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;
 import com.mtdev00.Sistema_Cadastro.Service.ClientService;
@@ -28,20 +29,20 @@ import com.mtdev00.Sistema_Cadastro.Service.ClientService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/clients")
+@RequestMapping(value = "/client")
 public class ClientResource {
 	@Autowired
 	private ClientService service;
 
-	// Buscando cliente através do ID
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ClientDTO> find(@PathVariable Integer id) {
-		Client client = service.findClient(id);
-		TypeClient type = TypeClient.toEnum(client.getType());
-		ClientDTO clientDTO = new ClientDTO(client, type.getDescricao());
-		return ResponseEntity.ok(clientDTO);
+	public ResponseEntity<ClientDTOComplet> find(@PathVariable Integer id) {
+	    Client client = service.findClient(id);
+	    List<Address> addresses = client.getAddress(); 
+	    Address address = addresses.isEmpty() ? null : addresses.get(0); 
+	    TypeClient type = TypeClient.toEnum(client.getType());
+	    ClientDTOComplet clientDTO = new ClientDTOComplet(client, type.getDescricao(), address);
+	    return ResponseEntity.ok(clientDTO);
 	}
-
 	@GetMapping(value = "/page")
 	public ResponseEntity<Page<ClientDTO>> findPageClient(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -67,9 +68,8 @@ public class ClientResource {
 		return ResponseEntity.ok(listDto);
 	}
 
-	// Inserindo cLientes
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid@RequestBody ClientDTOComplet objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTOComplet objDto) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(null);
 		obj = service.insert(obj);
@@ -78,7 +78,7 @@ public class ClientResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Client> update(@Valid@RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> update(@Valid @RequestBody ClientDTO objDto, @PathVariable Integer id) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -86,15 +86,16 @@ public class ClientResource {
 	}
 
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Client> updatePatch(@Valid@RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> updatePatch(@Valid @RequestBody ClientDTO objDto, @PathVariable Integer id) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.updatePatch(obj);
 		return ResponseEntity.noContent().build();
 	}
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Client> delete(@RequestBody ClientDTO objDto , @PathVariable Integer id){
-	   service.delete(id);
+	public ResponseEntity<Client> delete(@RequestBody ClientDTO objDto, @PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }

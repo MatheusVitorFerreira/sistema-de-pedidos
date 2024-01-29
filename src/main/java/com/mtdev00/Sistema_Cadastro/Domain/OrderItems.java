@@ -1,6 +1,8 @@
 package com.mtdev00.Sistema_Cadastro.Domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,9 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
 @Entity
-@Table(name ="Item orders")
-public class OrderItems implements Serializable{
+@Table(name = "Item orders")
+public class OrderItems implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	@EmbeddedId
@@ -18,9 +21,11 @@ public class OrderItems implements Serializable{
 	private Integer quantity;
 	private Double price;
 	private Double discount;
+
 	public OrderItems() {
 
 	}
+
 	public OrderItems(Order order, Product product, Integer quantity, Double price, Double discount) {
 		id.setOrder(order);
 		id.setProduct(product);
@@ -28,16 +33,27 @@ public class OrderItems implements Serializable{
 		this.price = price;
 		this.discount = discount;
 	}
+
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
+	}
+
+	@JsonIgnore
+	public double getAmountOrder() {
+		discount = 0.0;
+		return (price - discount) * quantity;
+
 	}
 
 	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
-	public Product getProducto() {
+
+	public Product getProduct() {
 		return id.getProduct();
 	}
+
 	public void setProduct(Product product) {
 		id.setProduct(product);
 	}
@@ -61,6 +77,7 @@ public class OrderItems implements Serializable{
 	public Double getDiscount() {
 		return discount;
 	}
+
 	public ItemOrderPK getId() {
 		return id;
 	}
@@ -89,4 +106,19 @@ public class OrderItems implements Serializable{
 		OrderItems other = (OrderItems) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"));
+		builder.append(getProduct().getName());
+		builder.append(", quantity: ");
+		builder.append(getQuantity());
+		builder.append(", price:");
+		builder.append(getPrice());
+		builder.append(", Amount Items Total:");
+		builder.append(nf.format(getAmountOrder()));
+		return builder.toString();
+	}
+
 }

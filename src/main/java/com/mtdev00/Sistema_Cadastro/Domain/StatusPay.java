@@ -23,8 +23,8 @@ public enum StatusPay {
 		if (cod == null) {
 			return null;
 		}
-		for (StatusPay x: StatusPay.values()) {
-			if(cod.equals(x.getCod())){
+		for (StatusPay x : StatusPay.values()) {
+			if (cod.equals(x.getCod())) {
 				return x;
 			}
 		}

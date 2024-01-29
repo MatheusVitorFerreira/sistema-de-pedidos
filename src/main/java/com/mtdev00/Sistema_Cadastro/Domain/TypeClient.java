@@ -1,7 +1,7 @@
 package com.mtdev00.Sistema_Cadastro.Domain;
 
 public enum TypeClient {
-	FISICA(1, "Pessoa Física"),JURIDICA(2, "Pessoa Jurídica");
+	FISICA(1, "Pessoa Física"), JURIDICA(2, "Pessoa Jurídica");
 
 	private int cod;
 	private String descricao;

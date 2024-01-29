@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mtdev00.Sistema_Cadastro.DTO.ProductDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
+import com.mtdev00.Sistema_Cadastro.Service.TreatmentErros.InsufficientStockException;
 import com.mtdev00.Sistema_Cadastro.repository.ProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +22,7 @@ import jakarta.transaction.Transactional;
 public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
+	
 
 	public Product findProduct(@PathVariable Integer id) {
 		Optional<Product> obj = productRepository.findById(id);
@@ -31,39 +33,39 @@ public class ProductService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return productRepository.findAll(pageRequest);
 	}
-	public List<Product> findAll(){
+
+	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
+
 	public Product fromDTO(ProductDTO objDto) {
-		Product prod = new Product(
-				objDto.getId(), 
-				objDto.getName(), 
-				objDto.getPrice(), 
-				objDto.getStockQuantity(), 
+		Product prod = new Product(objDto.getId(), objDto.getName(), objDto.getPrice(), objDto.getStockQuantity(),
 				objDto.getCategory());
 		return prod;
 	}
+
 	@Transactional
 	public Product insertProduct(Product obj) {
 		obj = productRepository.save(obj);
 		return obj;
 	}
-	
 
 	public List<Product> findAllProducts() {
 		return productRepository.findAll();
 	}
+
 	public Product update(Product obj) {
 		Product newObj = findProduct(obj.getId());
 		updateData(newObj, obj);
 		return productRepository.save(newObj);
 	}
-	public void updateData(Product newObj, Product objDto ) {
-		newObj.setName(objDto.getName());	
-		newObj.setPrice(objDto.getPrice());	
-		newObj.setStockQuantity(objDto.getStockQuantity());	
-		newObj.setCategory(objDto.getCategory());	
-		}
+
+	public void updateData(Product newObj, Product objDto) {
+		newObj.setName(objDto.getName());
+		newObj.setPrice(objDto.getPrice());
+		newObj.setStockQuantity(objDto.getStockQuantity());
+		newObj.setCategory(objDto.getCategory());
+	}
 
 	public void delete(Integer id) {
 		findProduct(id);
@@ -72,22 +74,35 @@ public class ProductService {
 
 	public Product updatePatch(Product obj) {
 		Product existingProduct = productRepository.findById(obj.getId()).orElse(null);
-		if( existingProduct == null) {
+		if (existingProduct == null) {
 			return null;
 		}
-		if(obj.getName() != null) {
+		if (obj.getName() != null) {
 			existingProduct.setName(obj.getName());
 		}
-		if(obj.getPrice() != null) {
+		if (obj.getPrice() != null) {
 			existingProduct.setPrice(obj.getPrice());
 		}
-		if(obj.getStockQuantity() != null) {
+		if (obj.getStockQuantity() != null) {
 			existingProduct.setStockQuantity(obj.getStockQuantity());
 		}
-		if(obj.getCategory() != null) {
+		if (obj.getCategory() != null) {
 			existingProduct.setCategory(obj.getCategory());
 		}
-		
+
 		return productRepository.save(existingProduct);
+	}
+	@Transactional
+	public Integer updateStockQuantity(Integer productId, Integer quantity) {
+	    Product product = findProduct(productId);
+	    if (product == null) {
+	        throw new ObjectNotFoundException(productId, "Product not found");
+	    }
+	    if (product.getStockQuantity() < quantity) {
+	        throw new InsufficientStockException("There is no such quantity of product in stock!" + product.getName());
+	    }
+	    product.setStockQuantity(product.getStockQuantity() - quantity);
+	    productRepository.save(product);
+	    return product.getStockQuantity();
 	}
 }

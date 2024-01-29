@@ -14,8 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 @Entity
-@Table(name ="Payments")
+@Table(name = "Payments")
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public class Payment implements Serializable {
@@ -23,11 +24,10 @@ public class Payment implements Serializable {
 	@Id
 	private Integer id;
 	private Integer status;
-	
 	@JsonIgnore
-    @OneToOne()
-    @JoinColumn(name = "order_id")
-    @MapsId
+	@OneToOne()
+	@JoinColumn(name = "order_id")
+	@MapsId
 	private Order order;
 
 	public Payment() {
@@ -48,12 +48,12 @@ public class Payment implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public StatusPay getStatus() {
+		return StatusPay.toEnum(status);
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setStatus(StatusPay status) {
+		this.status = status.getCod();
 	}
 
 	public Order getOrder() {
@@ -80,4 +80,5 @@ public class Payment implements Serializable {
 		Payment other = (Payment) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }

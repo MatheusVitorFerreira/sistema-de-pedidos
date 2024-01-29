@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.mtdev00.Sistema_Cadastro.DTO.ProductDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
 import com.mtdev00.Sistema_Cadastro.Service.ProductService;
+import com.mtdev00.Sistema_Cadastro.Service.URL;
 
 import jakarta.validation.Valid;
 
@@ -42,13 +43,16 @@ public class ProductResource implements Serializable {
 	}
 
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<ProductDTO>> findPageClient(
+	public ResponseEntity<Page<ProductDTO>> findPageClient(@RequestParam(value = "name", defaultValue = "") String name,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+		@SuppressWarnings("unused")
+		String nomeDecode = URL.decodeParam(name);
 		Page<Product> list = service.FindPageProduct(page, linesPerPage, orderBy, direction);
-		Page<ProductDTO> listDTO =list.map(product -> new ProductDTO(product));
+		Page<ProductDTO> listDTO = list.map(product -> new ProductDTO(product));
+
 		return ResponseEntity.ok().body(listDTO);
 	}
 
@@ -58,8 +62,9 @@ public class ProductResource implements Serializable {
 		List<ProductDTO> listDto = list.stream().map(product -> new ProductDTO(product)).collect(Collectors.toList());
 		return ResponseEntity.ok(listDto);
 	}
+
 	@GetMapping
-	public ResponseEntity<List<ProductDTO>> findAllProducts(){
+	public ResponseEntity<List<ProductDTO>> findAllProducts() {
 		List<Product> list = service.findAll();
 		List<ProductDTO> listDto = list.stream().map(products -> new ProductDTO(products)).collect(Collectors.toList());
 		return ResponseEntity.ok(listDto);
@@ -81,17 +86,19 @@ public class ProductResource implements Serializable {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Product> delete(@PathVariable Integer id){
+	public ResponseEntity<Product> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	@PatchMapping(value =  "/{id}")
-	public ResponseEntity<Product> updatePatch(@Valid @RequestBody ProductDTO objDto, @PathVariable Integer id){
+
+	@PatchMapping(value = "/{id}")
+	public ResponseEntity<Product> updatePatch(@Valid @RequestBody ProductDTO objDto, @PathVariable Integer id) {
 		Product obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.updatePatch(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 }
