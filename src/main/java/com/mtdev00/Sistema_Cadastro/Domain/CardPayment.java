@@ -3,11 +3,13 @@ package com.mtdev00.Sistema_Cadastro.Domain;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @JsonTypeName("cardPayment")
 public class CardPayment extends Payment {
 	private static final long serialVersionUID = -5724425900255155313L;
+	@NotNull
 	private Integer parcelsAmount;
 
 	public CardPayment() {

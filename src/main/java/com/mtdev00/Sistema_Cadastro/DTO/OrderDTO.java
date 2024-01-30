@@ -19,6 +19,7 @@ public class OrderDTO {
 	private List<OrderItems> items;
 	@JsonIgnore
 	private AddressDTO address;
+	private Double amountTotal;
 
 	public OrderDTO(Order order, Client cliente, AddressDTO address,StatusPay paymentStatus) {
 		this.id = order.getId();
@@ -28,6 +29,7 @@ public class OrderDTO {
 		this.addressCity = address.getCity();
 		this.items = new ArrayList<>(order.getItems());
 		this.paymentStatus = paymentStatus;
+		this.amountTotal = order.getAmountTotal();
 	}
 
 	public OrderDTO() {
@@ -95,6 +97,14 @@ public class OrderDTO {
 
 	public void setPaymentStatus(StatusPay paymentStatus) {
 		this.paymentStatus = paymentStatus;
+	}
+
+	public Double getAmountTotal() {
+		return amountTotal;
+	}
+
+	public void setAmountTotal(Double amountTotal) {
+		this.amountTotal = amountTotal;
 	}
 
 }

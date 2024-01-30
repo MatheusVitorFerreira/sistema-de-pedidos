@@ -1,5 +1,7 @@
 package com.mtdev00.Sistema_Cadastro.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import com.mtdev00.Sistema_Cadastro.DTO.AddressDTO;
 import com.mtdev00.Sistema_Cadastro.DTO.OrderDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.Address;
 import com.mtdev00.Sistema_Cadastro.Domain.BoletoPayment;
+import com.mtdev00.Sistema_Cadastro.Domain.CardPayment;
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
 import com.mtdev00.Sistema_Cadastro.Domain.Order;
 import com.mtdev00.Sistema_Cadastro.Domain.OrderItems;
@@ -59,7 +62,6 @@ public class OrderService {
 	public OrderDTO find(Integer id) {
 		Order order = orderRepo.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Order Not Found"));
 		Client client = clientService.findClient(order.getClient().getId());
-		@SuppressWarnings("unused")
 		Payment payment = PaymentRepo.findById(order.getPayment().getId())
 				.orElseThrow(() -> new ObjectNotFoundException(id, "Payment Not Found"));
 		Address address = addressRepo.findByClientId(client.getId());
@@ -81,19 +83,23 @@ public class OrderService {
 
 	@Transactional
 	public Order insert(Order obj) {
+		LocalDateTime now = LocalDateTime.now();
+	    Date instanceDate = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
 		obj.setId(null);
-		obj.setInstance(new Date());
+		obj.setInstance(instanceDate);
 		obj.getPayment().setOrder(obj);
 		obj.getPayment().setStatus(StatusPay.PENDANT);
-
 		if (obj.getPayment() instanceof BoletoPayment) {
 			BoletoPayment pagtoB = (BoletoPayment) obj.getPayment();
+			pagtoB.setPaymentDate(instanceDate);
 			boletoService.fillPagamentoComBoleto(pagtoB, obj.getInstance());
+		}else {
+			CardPayment pagtoC = (CardPayment) obj.getPayment();
+			pagtoC.getParcelsAmount();
+			
 		}
 		Address address = addressRepo.findByClientId(obj.getClient().getId());
 		obj.setAndressDelivery(address);
-
-		// Validação prévia da quantidade de estoque
 		for (OrderItems ip : obj.getItems()) {
 			Product product = productService.findProduct(ip.getProduct().getId());
 			if (product.getStockQuantity() < ip.getQuantity()) {
@@ -108,8 +114,6 @@ public class OrderService {
 			ip.setDiscount(0.0);
 			ip.setPrice(productService.findProduct(ip.getProduct().getId()).getPrice());
 			ip.setOrder(obj);
-
-			// Atualização do estoque
 			int updatedQuantity = productRepo.updateStockQuantity(ip.getProduct().getId(), ip.getQuantity());
 			if (updatedQuantity < 0) {
 				transactionManager.rollback(TransactionAspectSupport.currentTransactionStatus());
@@ -117,7 +121,6 @@ public class OrderService {
 						"There is no such quantity of product in stock!" + ip.getProduct().getName());
 			}
 		}
-
 		itemOrderRepository.saveAll(obj.getItems());
 		return obj;
 	}

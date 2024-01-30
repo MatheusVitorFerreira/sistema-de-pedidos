@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.mtdev00.Sistema_Cadastro.DTO.ClientDTO;
 import com.mtdev00.Sistema_Cadastro.DTO.ClientDTOComplet;
-import com.mtdev00.Sistema_Cadastro.DTO.OrderDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.Address;
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
 import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;

@@ -163,15 +163,6 @@ public class Client implements Serializable {
 		this.cnpj = cnpj;
 	}
 
-	private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(address);
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        address = (List<Address>) in.readObject();
-    }
 
 	@Override
 	public int hashCode() {
