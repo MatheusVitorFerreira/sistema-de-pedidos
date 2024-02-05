@@ -29,7 +29,7 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instance;
 	@ManyToOne
@@ -49,7 +49,7 @@ public class Order implements Serializable {
 
 	}
 
-	public Order(Integer id, Date instance, Client clients, Address andressDelivery) {
+	public Order(Long id, Date instance, Client clients, Address andressDelivery) {
 		this.id = id;
 		this.instance = instance;
 		this.client = clients;
@@ -60,11 +60,11 @@ public class Order implements Serializable {
 		return items.stream().mapToDouble(OrderItems::getAmountOrder).sum();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

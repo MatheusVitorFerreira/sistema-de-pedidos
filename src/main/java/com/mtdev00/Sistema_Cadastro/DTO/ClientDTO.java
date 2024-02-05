@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
 	@NotEmpty(message = "FIELD REQUIRED")
 	private String name;
 	@NotEmpty(message = "FIELD REQUIRED")
@@ -35,11 +35,11 @@ public class ClientDTO implements Serializable {
 
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

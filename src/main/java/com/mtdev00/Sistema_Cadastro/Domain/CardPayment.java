@@ -16,7 +16,7 @@ public class CardPayment extends Payment {
 
 	}
 
-	public CardPayment(Integer id, StatusPay status, Order order, Integer parcelsAmount) {
+	public CardPayment(Long id, StatusPay status, Order order, Integer parcelsAmount) {
 		super(id, status, order);
 		this.parcelsAmount = parcelsAmount;
 

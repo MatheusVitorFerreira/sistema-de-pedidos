@@ -7,7 +7,7 @@ import com.mtdev00.Sistema_Cadastro.Domain.Address;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddressDTO implements Serializable {
     private static final long serialVersionUID = -6750275615195036779L;
-    private Integer id;
+    private Long id;
     private String street; 
     private String addressSupplement;
     private String cep;
@@ -24,11 +24,11 @@ public class AddressDTO implements Serializable {
     public AddressDTO() {
     }
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

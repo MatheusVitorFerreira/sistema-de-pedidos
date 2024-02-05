@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 	List<Product> findByNameIgnoreCaseContaining(String name);
 
 	@Query("SELECT obj FROM Product obj WHERE name LIKE concat('%',:name,'%')")
@@ -24,5 +24,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Modifying
     @Query("UPDATE Product p SET p.stockQuantity = p.stockQuantity - :quantity WHERE p.id = :id")
-    int updateStockQuantity(@Param("id") Integer id, @Param("quantity") Integer quantity);
+    int updateStockQuantity(@Param("id") Long id, @Param("quantity") Integer quantity);
 }

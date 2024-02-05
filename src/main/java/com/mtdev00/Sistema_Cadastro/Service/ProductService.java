@@ -24,7 +24,7 @@ public class ProductService {
 	ProductRepository productRepository;
 	
 
-	public Product findProduct(@PathVariable Integer id) {
+	public Product findProduct(@PathVariable Long id) {
 		Optional<Product> obj = productRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(id, "ID: " + id + " Not Found"));
 	}
@@ -67,7 +67,7 @@ public class ProductService {
 		newObj.setCategory(objDto.getCategory());
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		findProduct(id);
 		productRepository.deleteById(id);
 	}
@@ -93,7 +93,7 @@ public class ProductService {
 		return productRepository.save(existingProduct);
 	}
 	@Transactional
-	public Integer updateStockQuantity(Integer productId, Integer quantity) {
+	public Integer updateStockQuantity(Long productId, Integer quantity) {
 	    Product product = findProduct(productId);
 	    if (product == null) {
 	        throw new ObjectNotFoundException(productId, "Product not found");

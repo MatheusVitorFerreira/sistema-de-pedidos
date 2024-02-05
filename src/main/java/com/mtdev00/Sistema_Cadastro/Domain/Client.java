@@ -1,8 +1,5 @@
 package com.mtdev00.Sistema_Cadastro.Domain;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,6 +22,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -34,7 +32,7 @@ public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	@NotEmpty
 	private String name;
 	@Column(unique = true)
@@ -63,7 +61,7 @@ public class Client implements Serializable {
 
 	}
 
-	public Client(Integer id, String name, String email, TypeClient type, String cpf, String cnpj) {
+	public Client(Long id, String name, String email, TypeClient type, String cpf, String cnpj) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -73,7 +71,7 @@ public class Client implements Serializable {
 		this.cnpj = cnpj;
 	}
 
-	public Client(Integer id, String name, String email, Integer type, String cpf, String cnpj, List<Address> address,
+	public Client(Long id, String name, String email, Integer type, String cpf, String cnpj, List<Address> address,
 			Set<String> telephone, List<Order> orders) {
 		super();
 		this.id = id;
@@ -87,11 +85,11 @@ public class Client implements Serializable {
 		this.orders = orders;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

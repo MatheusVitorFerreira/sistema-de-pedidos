@@ -10,7 +10,7 @@ import com.mtdev00.Sistema_Cadastro.Domain.OrderItems;
 import com.mtdev00.Sistema_Cadastro.Domain.StatusPay;
 
 public class OrderDTO {
-	private Integer id;
+	private Long id;
 	private String clientName;
 	private String addressStreet;
 	private String addressCep;
@@ -35,11 +35,11 @@ public class OrderDTO {
 	public OrderDTO() {
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

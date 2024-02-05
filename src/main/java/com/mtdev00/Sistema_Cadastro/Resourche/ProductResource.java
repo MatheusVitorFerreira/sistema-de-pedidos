@@ -36,7 +36,7 @@ public class ProductResource implements Serializable {
 	private ProductService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ProductDTO> findProduct(@PathVariable Integer id) {
+	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
 		Product obj = service.findProduct(id);
 		ProductDTO dto = new ProductDTO(obj);
 		return ResponseEntity.ok(dto);
@@ -80,7 +80,7 @@ public class ProductResource implements Serializable {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Product> updateProduct(@Valid @RequestBody ProductDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Product> updateProduct(@Valid @RequestBody ProductDTO objDto, @PathVariable Long id) {
 		Product obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -88,13 +88,13 @@ public class ProductResource implements Serializable {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Product> delete(@PathVariable Integer id) {
+	public ResponseEntity<Product> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Product> updatePatch(@Valid @RequestBody ProductDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Product> updatePatch(@Valid @RequestBody ProductDTO objDto, @PathVariable Long id) {
 		Product obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.updatePatch(obj);

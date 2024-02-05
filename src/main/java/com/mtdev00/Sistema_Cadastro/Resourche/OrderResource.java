@@ -23,7 +23,7 @@ public class OrderResource {
 	private OrderService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<OrderDTO> find(@PathVariable Integer id) {
+	public ResponseEntity<OrderDTO> find(@PathVariable Long id) {
 	  OrderDTO dto = service.find(id);
 	  return ResponseEntity.ok().body(dto);
 	}

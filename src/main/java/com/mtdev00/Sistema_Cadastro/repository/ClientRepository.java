@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Integer> {
+public interface ClientRepository extends JpaRepository<Client, Long> {
 
 	@Transactional(readOnly = true)
 	Client findByEmail(String email);

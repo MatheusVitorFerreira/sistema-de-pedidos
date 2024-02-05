@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.mtdev00.Sistema_Cadastro.Domain.OrderItems;
 
 @Repository
-public interface ItemOrderRepository extends JpaRepository<OrderItems, Integer> {
+public interface ItemOrderRepository extends JpaRepository<OrderItems, Long> {
 
 }

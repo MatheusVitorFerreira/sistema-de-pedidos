@@ -59,7 +59,7 @@ public class OrderService {
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 
-	public OrderDTO find(Integer id) {
+	public OrderDTO find(Long id) {
 		Order order = orderRepo.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Order Not Found"));
 		Client client = clientService.findClient(order.getClient().getId());
 		Payment payment = PaymentRepo.findById(order.getPayment().getId())

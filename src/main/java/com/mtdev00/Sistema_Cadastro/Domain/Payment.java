@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	private Integer id;
+	private Long id;
 	private Integer status;
 	@JsonIgnore
 	@OneToOne()
@@ -34,17 +34,17 @@ public class Payment implements Serializable {
 
 	}
 
-	public Payment(Integer id, StatusPay status, Order order) {
+	public Payment(Long id, StatusPay status, Order order) {
 		this.id = id;
 		this.status = (status == null) ? null : status.getCod();
 		this.order = order;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

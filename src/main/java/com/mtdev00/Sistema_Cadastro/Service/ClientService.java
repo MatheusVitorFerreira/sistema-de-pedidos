@@ -28,7 +28,7 @@ public class ClientService {
 	@Autowired
 	AddressRepository addresRepo;
 
-	public Client findClient(Integer id) {
+	public Client findClient(Long id) {
 		clientRepo.findById(id);
 		return clientRepo.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Client not found"));
 	}
@@ -76,7 +76,7 @@ public class ClientService {
 	}
 
 	@Transactional
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		findClient(id);
 		try {
 			clientRepo.deleteById(id);

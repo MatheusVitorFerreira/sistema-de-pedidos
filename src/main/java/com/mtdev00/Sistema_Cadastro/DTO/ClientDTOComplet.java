@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mtdev00.Sistema_Cadastro.Domain.Address;
 import com.mtdev00.Sistema_Cadastro.Domain.Client;
+import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,11 +21,8 @@ public class ClientDTOComplet implements Serializable {
 	private String email;
 	@NotNull
 	private Integer type;
-	@NotEmpty(message = "FIELD REQUIRED")
 	private String cpf;
-	@NotEmpty(message = "FIELD REQUIRED")
 	private String cnpj;
-	@NotEmpty(message = "FIELD REQUIRED")
 	private String descriptionType;
 	@JsonIgnore
 	private Address ad;
@@ -45,7 +43,7 @@ public class ClientDTOComplet implements Serializable {
 		type = client.getType();
 		cpf = client.getCpf();
 		cnpj = client.getCnpj();
-		descriptionType = description;
+		this.descriptionType = (type != null) ? TypeClient.toEnum(type).getDescricao() : null;
 		this.setAd(address);
 		if (address != null) {
 			city = address.getCity();

@@ -4,12 +4,19 @@ import java.io.Serializable;
 
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ProductDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Long id;
+	@NotBlank
 	private String name;
+	@NotNull
 	private Double price;
+	@NotNull
 	private Integer stockQuantity;
+	@NotBlank
 	private String category;
 
 	public ProductDTO() {
@@ -24,11 +31,11 @@ public class ProductDTO implements Serializable {
 		this.category = objDto.getCategory();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

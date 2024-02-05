@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.mtdev00.Sistema_Cadastro.Domain.Address;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Address, Integer> {
+public interface AddressRepository extends JpaRepository<Address, Long> {
 	@Query("SELECT a FROM Address a WHERE a.client.id = :clients_id")
-	Address findByClientId(@Param("clients_id") Integer clientId);
+	Address findByClientId(@Param("clients_id") Long clientId);
 }

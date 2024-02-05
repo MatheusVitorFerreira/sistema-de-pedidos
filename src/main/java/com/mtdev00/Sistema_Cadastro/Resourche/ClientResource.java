@@ -35,7 +35,7 @@ public class ClientResource {
 	private ClientService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ClientDTOComplet> find(@PathVariable Integer id) {
+	public ResponseEntity<ClientDTOComplet> find(@PathVariable Long id) {
 	    Client client = service.findClient(id);
 	    List<Address> addresses = client.getAddress(); 
 	    Address address = addresses.isEmpty() ? null : addresses.get(0); 
@@ -78,7 +78,7 @@ public class ClientResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Client> update(@Valid @RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> update(@Valid @RequestBody ClientDTO objDto, @PathVariable Long id) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -86,7 +86,7 @@ public class ClientResource {
 	}
 
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Client> updatePatch(@Valid @RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> updatePatch(@Valid @RequestBody ClientDTO objDto, @PathVariable Long id) {
 		Client obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.updatePatch(obj);
@@ -94,7 +94,7 @@ public class ClientResource {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Client> delete(@RequestBody ClientDTO objDto, @PathVariable Integer id) {
+	public ResponseEntity<Client> delete(@RequestBody ClientDTO objDto, @PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
