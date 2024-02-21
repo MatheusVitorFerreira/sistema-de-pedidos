@@ -15,7 +15,7 @@ API de Gerenciamento de Clientes e Pedidos
 
 ->Tecnologias:
 
--Java: Linguagem de programação robusta e versátil.
+-Java: Linguagem de programação.
 
 -Spring Boot: Framework para desenvolvimento rápido e eficiente.
 
