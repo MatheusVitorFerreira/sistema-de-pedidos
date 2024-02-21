@@ -15,6 +15,7 @@ API de Gerenciamento de Clientes e Pedidos
 
 ->Tecnologias:
 
+-Banco de Dados: MYSQL
 -Java: Linguagem de programação.
 
 -Spring Boot: Framework para desenvolvimento rápido e eficiente.
