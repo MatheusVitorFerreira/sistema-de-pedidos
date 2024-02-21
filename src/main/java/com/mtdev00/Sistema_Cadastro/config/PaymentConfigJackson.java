@@ -22,8 +22,8 @@ public class PaymentConfigJackson {
 		return builder;
 	}
 	@Bean
-	public OrderService orderService() {
-	  return new OrderService(); 
+	public OrderService paymentOrderService() {
+	    return new OrderService();
 	}
 
 }

@@ -2,6 +2,8 @@ package com.mtdev00.Sistema_Cadastro.Service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +19,6 @@ import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;
 import com.mtdev00.Sistema_Cadastro.Service.TreatmentErros.DataIntegrityException;
 import com.mtdev00.Sistema_Cadastro.repository.AddressRepository;
 import com.mtdev00.Sistema_Cadastro.repository.ClientRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class ClientService {

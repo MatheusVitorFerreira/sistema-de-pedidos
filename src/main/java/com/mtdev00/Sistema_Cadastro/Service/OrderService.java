@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +24,12 @@ import com.mtdev00.Sistema_Cadastro.Domain.OrderItems;
 import com.mtdev00.Sistema_Cadastro.Domain.Payment;
 import com.mtdev00.Sistema_Cadastro.Domain.Product;
 import com.mtdev00.Sistema_Cadastro.Domain.StatusPay;
-import com.mtdev00.Sistema_Cadastro.Resourche.BoletoService;
 import com.mtdev00.Sistema_Cadastro.Service.TreatmentErros.InsufficientStockException;
 import com.mtdev00.Sistema_Cadastro.repository.AddressRepository;
 import com.mtdev00.Sistema_Cadastro.repository.ItemOrderRepository;
 import com.mtdev00.Sistema_Cadastro.repository.OrderRepository;
 import com.mtdev00.Sistema_Cadastro.repository.PaymentRepository;
 import com.mtdev00.Sistema_Cadastro.repository.ProductRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class OrderService {

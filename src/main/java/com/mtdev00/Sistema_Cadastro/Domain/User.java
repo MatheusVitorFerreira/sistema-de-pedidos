@@ -4,23 +4,23 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.mtdev00.Sistema_Cadastro.config.UserRole;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 @Table(name = "users")
 @Entity(name = "users")
 @Getter
@@ -59,9 +59,6 @@ public class User implements UserDetails {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    public User() {
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role.equals(UserRole.ADMIN.getRole())) {

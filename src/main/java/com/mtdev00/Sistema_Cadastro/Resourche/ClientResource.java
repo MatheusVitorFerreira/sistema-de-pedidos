@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +28,24 @@ import com.mtdev00.Sistema_Cadastro.Domain.Client;
 import com.mtdev00.Sistema_Cadastro.Domain.TypeClient;
 import com.mtdev00.Sistema_Cadastro.Service.ClientService;
 
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+
 
 @RestController
 @RequestMapping(value = "/client")
-public class ClientResource {
+public class ClientResource  {
 	@Autowired
 	private ClientService service;
-
+	
+	@Operation(description = "Search client by ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode ="200",description  = "Return client"),
+			@ApiResponse(responseCode ="400",description  = "Not Found Client")
+			
+	})
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<ClientDTOComplet> find(@PathVariable Long id) {
 	    Client client = service.findClient(id);

@@ -1,6 +1,10 @@
 package com.mtdev00.Sistema_Cadastro.Service;
 
+
+
 import java.util.Date;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +23,6 @@ import com.mtdev00.Sistema_Cadastro.DTO.RegisterDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.User;
 import com.mtdev00.Sistema_Cadastro.repository.UserRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 public class AuthorizationService implements UserDetailsService {
 
@@ -34,8 +36,8 @@ public class AuthorizationService implements UserDetailsService {
     private org.springframework.context.ApplicationContext context;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByLogin(username);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return userRepository.findByLogin(login);
     }
 
     public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDTO data) {
@@ -54,3 +56,4 @@ public class AuthorizationService implements UserDetailsService {
     	return ResponseEntity.ok().build();
     }
 }
+	

@@ -2,11 +2,11 @@ package com.mtdev00.Sistema_Cadastro.Domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import jakarta.persistence.Entity;
 
 @Entity
 @JsonTypeName("boletoPayment")

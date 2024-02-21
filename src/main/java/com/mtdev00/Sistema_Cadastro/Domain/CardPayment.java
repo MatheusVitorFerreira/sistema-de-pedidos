@@ -1,9 +1,9 @@
 package com.mtdev00.Sistema_Cadastro.Domain;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 @JsonTypeName("cardPayment")

@@ -2,10 +2,10 @@ package com.mtdev00.Sistema_Cadastro.DTO;
 
 import java.io.Serializable;
 
-import com.mtdev00.Sistema_Cadastro.Domain.Client;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import com.mtdev00.Sistema_Cadastro.Domain.Client;
 
 public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;

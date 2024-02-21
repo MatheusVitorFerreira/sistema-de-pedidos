@@ -1,8 +1,10 @@
 package com.mtdev00.Sistema_Cadastro.Resourche;
 
+import java.io.Serializable;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +20,10 @@ import com.mtdev00.Sistema_Cadastro.Service.OrderService;
 
 @RestController
 @RequestMapping(value = "/order")
-public class OrderResource {
+public class OrderResource implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Autowired
+	@Qualifier("paymentOrderService")
 	private OrderService service;
 
 	@GetMapping(value = "/{id}")

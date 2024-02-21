@@ -1,23 +1,22 @@
 package com.mtdev00.Sistema_Cadastro.Service.TreatmentErros;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 @ControllerAdvice
-public class ResourceExcepetionHandller implements AccessDeniedHandler  {
+public class ResourceExcepetionHandller {
 
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> ObjectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
@@ -47,7 +46,6 @@ public class ResourceExcepetionHandller implements AccessDeniedHandler  {
 				System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
-	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), "Acesso negado", System.currentTimeMillis());

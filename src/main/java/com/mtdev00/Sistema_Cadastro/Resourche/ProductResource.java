@@ -1,9 +1,10 @@
 package com.mtdev00.Sistema_Cadastro.Resourche;
 
-import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,12 +26,10 @@ import com.mtdev00.Sistema_Cadastro.Domain.Product;
 import com.mtdev00.Sistema_Cadastro.Service.ProductService;
 import com.mtdev00.Sistema_Cadastro.Service.URL;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping(value = "/product")
-public class ProductResource implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ProductResource {
+
 
 	@Autowired
 	private ProductService service;
@@ -56,7 +55,7 @@ public class ProductResource implements Serializable {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-	@GetMapping(value = "/products") // Specify path for GET request
+	@GetMapping(value = "/products")
 	public ResponseEntity<List<ProductDTO>> findall() {
 		List<Product> list = service.findAll();
 		List<ProductDTO> listDto = list.stream().map(product -> new ProductDTO(product)).collect(Collectors.toList());
