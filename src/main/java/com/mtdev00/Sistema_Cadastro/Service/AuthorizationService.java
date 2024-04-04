@@ -15,13 +15,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mtdev00.Sistema_Cadastro.DTO.AuthenticationDTO;
 import com.mtdev00.Sistema_Cadastro.DTO.LoginResponseDTO;
 import com.mtdev00.Sistema_Cadastro.DTO.RegisterDTO;
 import com.mtdev00.Sistema_Cadastro.Domain.User;
 import com.mtdev00.Sistema_Cadastro.repository.UserRepository;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+
 
 @Service
 public class AuthorizationService implements UserDetailsService {
@@ -45,7 +48,9 @@ public class AuthorizationService implements UserDetailsService {
         var userNamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = authenticationManager.authenticate(userNamePassword);
         var token = tokenService.generateToken((User) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO(token.getToken(), token.getExpiration());
+        
+        return ResponseEntity.ok(loginResponseDTO);
     }
     public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO registerDTO) {
     	if(this.userRepository.findByLogin(registerDTO.login()) !=null) return ResponseEntity.badRequest().build();
